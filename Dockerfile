@@ -6,7 +6,7 @@ EXPOSE 8080
 
 VOLUME [ "/data/certbot" "/data/serles" ]
 
-RUN apk add --update python3 py3-pip certbot runuser
+RUN apk add --update python3 py3-pip certbot certbot-dns-cloudflare runuser
 RUN python3 -m venv /opt/serles &&\
     . /opt/serles/bin/activate &&\
     python3 -m pip install --quiet --no-cache-dir --upgrade pip setuptools &&\
