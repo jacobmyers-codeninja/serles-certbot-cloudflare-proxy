@@ -1,5 +1,7 @@
 FROM alpine
 
+ENV CONFIG=/data/serles/config.ini
+
 EXPOSE 8080
 
 VOLUME [ "/data/certbot" "/data/serles" ]
