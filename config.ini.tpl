@@ -21,7 +21,7 @@ config =
     email=${EMAIL}
     preferred-challenges=dns
     dns-cloudflare
-    dns-cloudflare-credentials=/data/certbot/cloudflare.ini
+    dns-cloudflare-credentials=/data/certbot/cloudflare-credentials.ini
     config-dir=/data/certbot/config
     work-dir=/data/certbot/work
     logs-dir=/data/certbot/logs
