@@ -2,7 +2,7 @@
 
 # pylint: disable=invalid-name
 
-"""Gunicorn configuration for Serles"""
+"""Gunicorn configuration"""
 
 accesslog = "-"
 bind = "0.0.0.0:8080"

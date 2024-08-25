@@ -20,5 +20,7 @@ COPY entrypoint.sh /entrypoint.sh
 COPY healthcheck.py /healthcheck.py
 COPY gunicorn_config.py /opt/serles/gunicorn_config.py
 COPY config.ini.tpl /opt/serles/config.ini.tpl
-ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+
 HEALTHCHECK --timeout=3s CMD [ "/opt/serles/bin/python3", "/healthcheck.py" ]
+
+ENTRYPOINT [ "sh", "/entrypoint.sh" ]
