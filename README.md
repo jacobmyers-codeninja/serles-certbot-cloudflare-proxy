@@ -28,7 +28,7 @@ docker run  --name acme-proxy \
             -l "traefik.http.routers.serles.entrypoints=websecure" \
             -l "traefik.http.routers.serles.rule=Host(`acme-proxy.your-domain.com`)" \
             -l "traefik.http.routers.serles.tls.certresolver=leproxy" \
-            jacobmyers42/serles-certbot-cloudflare-proxy-l
+            jacobmyers42/serles-certbot-cloudflare-proxy
 ```
 
 Traefik frontend to provide the tls support to self LE the proxy:
