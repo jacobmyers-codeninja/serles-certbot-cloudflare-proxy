@@ -8,7 +8,8 @@ ENV CONFIG=/data/serles/config.ini
 
 EXPOSE 8080
 
-VOLUME [ "/data/certbot" "/data/serles" ]
+VOLUME /data/certbot
+VOLUME /data/serles
 
 RUN apk add --update python3 py3-pip certbot certbot-dns-cloudflare envsubst runuser
 RUN python3 -m venv /opt/serles &&\
