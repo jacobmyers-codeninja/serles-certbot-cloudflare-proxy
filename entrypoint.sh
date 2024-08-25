@@ -1,7 +1,13 @@
 #!/bin/bash
 
 set -e
-#python3 /usr/local/sbin/configure.py
+export FORMATTED_ALLOWED_IPS=`echo -n ${ALLOWED_IPS} | sed 's/,/\n\t/g'`
+export FORMATTED_DENIED_IPS=`echo -n ${DENIED_IPS} | sed 's/,/\n\t/g'`
+
+cat /opt/serles/config.ini.tpl | envsubst > /data/serles/config.ini
+
+cat /data/serles/config.ini
+
 mkdir -p /data/certbot/config
 mkdir -p /data/certbot/work
 mkdir -p /data/certbot/log

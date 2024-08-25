@@ -4,14 +4,11 @@ database = sqlite://///data/serles/db.sqlite
 backend = serles.backends.certbot
 
 allowedServerIpRanges =
-	::1/128
-	127.0.0.0/8
-	192.168.0.0/16
-    10.0.0.0/8
+	${FORMATTED_ALLOWED_IPS}
 excludeServerIpRanges =
-	127.0.0.2/32
+	${FORMATTED_DENIED_IPS}
 
-verifyPTR = false
+verifyPTR = ${VERIFY_PTR}
 
 subjectNameTemplate = CN={SAN[0]}
 
@@ -21,10 +18,10 @@ forceTemplateDN = true
 
 config =
     agree-tos
-    email=
+    email=${EMAIL}
     preferred-challenges=dns
     dns-cloudflare
-    dns-cloudflare-credentials=/data/serles/cloudflare.ini
+    dns-cloudflare-credentials=/data/certbot/cloudflare.ini
     config-dir=/data/certbot/config
     work-dir=/data/certbot/work
     logs-dir=/data/certbot/logs
