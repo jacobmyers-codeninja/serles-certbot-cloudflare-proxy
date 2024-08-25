@@ -9,4 +9,10 @@
 Load cloudflare certbot credentials into the named certbot volume under config/cloudflare-credentials.ini
 
 Docker:
-`docker run --name acme-proxy -v certbot:/data/certbot -v serles:/data/serles -p 8080:8080 jacobmyers42/serles-certbot-cloudflare-proxy`
+```
+docker run --name acme-proxy 
+            -v certbot:/data/certbot 
+            -v serles:/data/serles 
+            -p 8080:8080 
+            jacobmyers42/serles-certbot-cloudflare-proxy
+```
