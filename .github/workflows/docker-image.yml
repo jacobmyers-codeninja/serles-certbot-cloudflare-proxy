@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: [ ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:v1 ]
+
+      - name: Build and push to GitHub Container Registry
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: [ ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:v1 ]
