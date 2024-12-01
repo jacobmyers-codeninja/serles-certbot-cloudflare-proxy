@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  PLATFORMS: linux/amd64, linux/arm64
+  
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform: [linux/amd64, linux/arm64]
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ env.PLATFORMS }}
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:v1, ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
 
@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ env.PLATFORMS }}
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:v1, ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
             
