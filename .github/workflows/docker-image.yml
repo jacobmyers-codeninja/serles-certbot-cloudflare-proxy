@@ -42,7 +42,7 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           push: true
-          tags: [ ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:v1 ]
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:v1, ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
 
       - name: Build and push to GitHub Container Registry
         uses: docker/build-push-action@v3
@@ -50,4 +50,5 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           push: true
-          tags: [ ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:v1 ]
+          tags: ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:v1, ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
+            
