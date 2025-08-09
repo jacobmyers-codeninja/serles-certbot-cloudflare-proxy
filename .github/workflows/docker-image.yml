@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
+  release:
+    types: [published]
 
 env:
   PLATFORMS: linux/amd64, linux/arm64
@@ -34,19 +36,34 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push to Docker Hub
+#      - name: Login to Quay.io
+#        uses: docker/login-action@v3
+#        with:
+#          registry: quay.io
+#          username: ${{ secrets.QUAY_USERNAME }}
+#          password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: Extract Tag or Branch
+        id: vars
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            TAG=${{ github.event.release.tag_name }}
+          else
+            TAG=${GITHUB_REF##*/}
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          
+      - name: Build and push to Docker Hub / GitHub Container Registry
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: ${{ env.PLATFORMS }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:v1, ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
-
-      - name: Build and push to GitHub Container Registry
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: ${{ env.PLATFORMS }}
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:v1, ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
+            ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
+#            quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
+#            quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
             
