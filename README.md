@@ -16,8 +16,8 @@ Docker:
 docker run  --name acme-proxy \
             -v certbot:/data/certbot \
             -v serles:/data/serles \
-            -e EMAIL=my@email.com \n
-            -e RESOLV_CONF="server 1.1.1.1" \n
+            -e EMAIL=my@email.com \
+            -e RESOLV_CONF="server 1.1.1.1" \
             -p 8080:8080 \
             jacobmyers42/serles-certbot-cloudflare-proxy
 ```
@@ -26,8 +26,8 @@ With labels for traefik:
 docker run  --name acme-proxy \
             -v certbot:/data/certbot \
             -v serles:/data/serles \
-            -e EMAIL=my@email.com \n
-            -e RESOLV_CONF="server 1.1.1.1" \n
+            -e EMAIL=my@email.com \
+            -e RESOLV_CONF="server 1.1.1.1" \
             -p 8080:8080 \
             -l "traefik.enable=true" \
             -l "traefik.http.routers.serles-web.entrypoints=web" \
