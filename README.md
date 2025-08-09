@@ -5,14 +5,19 @@
 | DENIED_IPS  | 127.0.0.2/32                                                | CSV list of denied IP CIDRs                                      |
 | VERIFY_PTR  | true                                                        | true to require a valid PTR for request                          |
 | CONFIG      | /data/serles/config.ini                                     | path to fully custom config.ini for serles if not using ENV vars |
+| RESOLV_CONF | <none>                                                      | content to write to /etc/resolv.conf (ie: nameserver 1.1.1.1)    |
 
 Load cloudflare certbot credentials into the named certbot volume under config/cloudflare-credentials.ini
+
+To deal with potential split horizon DNS you can override the dns servers through resolv.conf by setting the contents in RESOLV_CONF
 
 Docker:
 ```
 docker run  --name acme-proxy \
             -v certbot:/data/certbot \
             -v serles:/data/serles \
+            -e EMAIL=my@email.com \
+            -e RESOLV_CONF="nameserver 1.1.1.1" \
             -p 8080:8080 \
             jacobmyers42/serles-certbot-cloudflare-proxy
 ```
@@ -21,6 +26,8 @@ With labels for traefik:
 docker run  --name acme-proxy \
             -v certbot:/data/certbot \
             -v serles:/data/serles \
+            -e EMAIL=my@email.com \
+            -e RESOLV_CONF="nameserver 1.1.1.1" \
             -p 8080:8080 \
             -l "traefik.enable=true" \
             -l "traefik.http.routers.serles-web.entrypoints=web" \
