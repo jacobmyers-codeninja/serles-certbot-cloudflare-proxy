@@ -47,13 +47,22 @@ jobs:
         id: vars
         run: |
           if [[ "${{ github.event_name }}" == "release" ]]; then
-            TAG=${{ github.event.release.tag_name }}
-          elif [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            TAG=latest
+            TAGS="${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:latest, \
+                  ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}, \
+                  ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:latest, \
+                  ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}"
+#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:latest, \
+#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}
           else
-            TAG=${GITHUB_REF##*/}
+            TAGS="${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}, \
+                  ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}"
+#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}
           fi
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          TAGS="$TAGS, \
+                ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, \
+                ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}"
+#                quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
+          echo "tags=$TAGS" >> $GITHUB_OUTPUT
           
       - name: Build and push to Docker Hub / GitHub Container Registry
         uses: docker/build-push-action@v6
@@ -61,11 +70,4 @@ jobs:
           context: .
           platforms: ${{ env.PLATFORMS }}
           push: true
-          tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
-            ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
-            ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
-#            quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ steps.vars.outputs.tag }}
-#            quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
-            
+          tags: ${{ steps.vars.outputs.docker_tags }}
