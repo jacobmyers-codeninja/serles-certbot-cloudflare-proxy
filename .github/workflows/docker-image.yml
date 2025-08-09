@@ -48,6 +48,8 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "release" ]]; then
             TAG=${{ github.event.release.tag_name }}
+          elif [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            TAG=latest
           else
             TAG=${GITHUB_REF##*/}
           fi
