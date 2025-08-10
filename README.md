@@ -31,7 +31,19 @@ docker run  --name acme-proxy \
             -v serles:/data/serles \
             -e EMAIL=my@email.com \
             -e RESOLV_CONF="nameserver 1.1.1.1" \
-            -p 8080:8080 \
+            -p 80:9000 \
+            jacobmyers42/serles-certbot-cloudflare-proxy
+```
+
+Docker (with automatic https):
+```
+docker run  --name acme-proxy \
+            -v certbot:/data/certbot \
+            -v serles:/data/serles \
+            -e EMAIL=my@email.com \
+            -e RESOLV_CONF="nameserver 1.1.1.1" \
+            -e FQDN="acme-proxy.your-domain.com" \
+            -p 443:9000 \
             jacobmyers42/serles-certbot-cloudflare-proxy
 ```
 
@@ -42,7 +54,7 @@ docker run  --name acme-proxy \
             -v serles:/data/serles \
             -e EMAIL=my@email.com \
             -e RESOLV_CONF="nameserver 1.1.1.1" \
-            -p 8080:8080 \
+            -p 8080:9000 \
             -l "traefik.enable=true" \
             -l "traefik.http.routers.serles-web.entrypoints=web" \
             -l "traefik.http.routers.serles-web.rule=Host(`acme-proxy.your-domain.com`)" \

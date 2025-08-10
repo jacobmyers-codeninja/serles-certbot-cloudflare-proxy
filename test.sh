@@ -11,6 +11,5 @@ docker run -d --name acme-proxy \
            --env-file .env \
            -v ./certbot:/data/certbot \
            -v ./serles:/data/serles \
-           -p 8080:8080 \
-           -p 8443:8443 \
+           -p 9000:9000 \
            sccp:test

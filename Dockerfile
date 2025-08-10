@@ -14,8 +14,7 @@ ENV CERTBOT_CONF="preferred-challenges=dns\n\
 dns-cloudflare\n\
 dns-cloudflare-credentials=/data/certbot/config/cloudflare-credentials.ini"
 
-EXPOSE 8080
-EXPOSE 8443
+EXPOSE 9000
 
 VOLUME /data/certbot
 VOLUME /data/serles

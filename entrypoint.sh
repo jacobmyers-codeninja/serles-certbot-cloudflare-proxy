@@ -82,7 +82,6 @@ if [ ! -z $FQDN ]; then
   rm /initializing
 else
   # No cert mode, just do normal http
-  export PORT=8080
 
   cat /opt/serles/gunicorn_config.py.tpl | envsubst > /opt/serles/gunicorn_config.py
 fi

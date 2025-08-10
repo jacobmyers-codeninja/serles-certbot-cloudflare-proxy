@@ -52,10 +52,11 @@ if [ $EXIT_CODE -eq 7 ]; then
 fi
 
 if [ ! -z $FQDN ]; then
-  SERVER=https://$FQDN:8443/
+  PROTO=https
 else
-  SERVER=http://$FQDN:8080/
+  PROTO=http
 fi
+SERVER=$PROTO://$FQDN:9000/
 
 echo "Testing $SERVER"
 
