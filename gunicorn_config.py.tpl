@@ -5,7 +5,9 @@
 """Gunicorn configuration"""
 
 accesslog = "-"
-bind = "0.0.0.0:8080"
 disable_redirect_access_to_syslog = True
 forwarded_allow_ips = "*"
 workers = 1
+bind = "0.0.0.0:$PORT"
+$GUNICORN_CERT_FILE
+$GUNICORN_KEY_FILE
