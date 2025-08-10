@@ -1,2 +1,8 @@
+.env
+.qodo/
 certbot/
 serles/
+
+cloudflare-credentials.ini
+shell.sh
+temp
