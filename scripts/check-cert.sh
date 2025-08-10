@@ -2,13 +2,11 @@
 
 set -e
 
-export PORT=8080
 # If CERT_FILE is empty default to /serles/self-cert.pem
 if [ -z $CERT_FILE ]; then
   export AUTO_CERT_FILE=true
   export CERT_FILE=/data/certbot/config/live/$CERT_NAME/fullchain.pem
   export KEY_FILE=/data/certbot/config/live/$CERT_NAME/privkey.pem
-  export PORT=8443
   export GUNICORN_CERT_FILE="certfile = \"$CERT_FILE\""
   export GUNICORN_KEY_FILE="keyfile = \"$KEY_FILE\""
 fi

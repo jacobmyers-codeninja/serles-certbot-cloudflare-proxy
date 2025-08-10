@@ -4,5 +4,5 @@ certbot/
 serles/
 
 cloudflare-credentials.ini
-shell.sh
+bin/shell.sh
 temp

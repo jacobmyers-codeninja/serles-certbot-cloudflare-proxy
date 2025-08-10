@@ -25,12 +25,12 @@ RUN python3 -m venv /opt/serles &&\
     python3 -m pip install --quiet --no-cache-dir --upgrade pip setuptools &&\
     python3 -m pip install --quiet --no-cache-dir serles-acme==1.1.0
 
-COPY entrypoint.sh /entrypoint.sh
-COPY healthcheck.sh /healthcheck.sh
-COPY check-cert.sh /check-cert.sh
-COPY gunicorn_config.py.tpl /opt/serles/gunicorn_config.py.tpl
-COPY serles-config.ini.tpl /opt/serles/config.ini.tpl
-COPY serles-certbot.ini.tpl /opt/serles/certbot.ini.tpl
+COPY scripts/entrypoint.sh /entrypoint.sh
+COPY scripts/healthcheck.sh /healthcheck.sh
+COPY scripts/check-cert.sh /check-cert.sh
+COPY configs/gunicorn_config.py.tpl /opt/serles/gunicorn_config.py.tpl
+COPY configs/serles-config.ini.tpl /opt/serles/config.ini.tpl
+COPY configs/serles-certbot.ini.tpl /opt/serles/certbot.ini.tpl
 
 HEALTHCHECK --interval=5m --timeout=1m --retries=3 --start-period=2m CMD [ "/bin/sh", "/healthcheck.sh" ]
 
