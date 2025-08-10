@@ -96,6 +96,6 @@ echo
 
 echo "Starting gunicorn server..."
 
-runuser -u nobody -- /opt/serles/bin/gunicorn -p /data/serles/gunicorn.pid \
+runuser -u nobody -- /opt/serles/bin/gunicorn -p /tmp/gunicorn.pid \
                                               -c /opt/serles/gunicorn_config.py \
                                               "serles:create_app()"

@@ -39,7 +39,7 @@ set -e
 
 # If the error is 7 it has gotten a new cert
 if [ $EXIT_CODE -eq 7 ]; then
-  GUNICORN_PID=$(cat /data/serles/gunicorn.pid)
+  GUNICORN_PID=$(cat /tmp/gunicorn.pid)
 
   # Send HUP to gunicorn to make it restart
   echo "Sending HUP to $GUNICORN_PID"
