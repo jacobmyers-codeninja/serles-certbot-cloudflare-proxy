@@ -38,13 +38,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Login to Quay.io
-#        uses: docker/login-action@v3
-#        with:
-#          registry: quay.io
-#          username: ${{ secrets.QUAY_USERNAME }}
-#          password: ${{ secrets.QUAY_PASSWORD }}
-
       - name: Extract Tag or Branch
         id: vars
         run: |
@@ -53,18 +46,14 @@ jobs:
                   ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}, \
                   ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:latest, \
                   ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}"
-#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:latest, \
-#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.event.release.tag_name }}
           else
             TAGS="${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}, \
                   ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}"
-#                  quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${GITHUB_REF##*/}
           fi
           TAGS="$TAGS, \
                 ${{ secrets.DOCKER_HUB_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}, \
                 ghcr.io/${{ github.repository_owner }}/serles-certbot-cloudflare-proxy:${{ github.sha }}"
-#                quay.io/${{ secrets.QUAY_USERNAME }}/serles-certbot-cloudflare-proxy:${{ github.sha }}
-          echo "tags=$TAGS" >> $GITHUB_OUTPUT
+          echo "docker_tags=$TAGS" >> $GITHUB_OUTPUT
           
       - name: Build and push to Docker Hub / GitHub Container Registry
         uses: docker/build-push-action@v6
