@@ -2,7 +2,7 @@
 
 set -e
 
-# If CERT_FILE is empty default to /serles/self-cert.pem
+# If CERT_FILE is empty default to where certbot will put it
 if [ -z $CERT_FILE ]; then
   export AUTO_CERT_FILE=true
   export CERT_FILE=/data/certbot/config/live/$CERT_NAME/fullchain.pem

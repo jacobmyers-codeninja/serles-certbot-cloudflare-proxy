@@ -47,8 +47,6 @@ if [ $EXIT_CODE -eq 7 ]; then
 
   # The server might need a bit before restarting so sleep for a bit
   sleep 30
-
-  exit
 fi
 
 if [ ! -z $FQDN ]; then
@@ -61,7 +59,7 @@ SERVER=$PROTO://$FQDN:9000/
 echo "Testing $SERVER"
 
 if wget -qO- $SERVER | grep "Serles ACME Server is running"; then
-  # Noop
+  # All good
   rm /healthcheck
 
   exit

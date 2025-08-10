@@ -41,9 +41,8 @@ if [ ! -z $FQDN ]; then
   # Mark that we are currently initializing
   touch /initializing
 
-  # If CERT_FILE is empty default to /data/serles/serles-cert.pem
+  # Provided a cert without a key
   if [ ! -z $CERT_FILE ] && [ -z $KEY_FILE ]; then
-    # Provided a cert without a key
     echo "CERT_FILE was provided, but missing necessary KEY_FILE"
 
     exit 1
