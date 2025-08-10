@@ -2,11 +2,6 @@
 
 set -e
 
-# TODO: Testing, remove for release
-if [ -z $TESTING ]; then
-  exit
-fi
-
 # If previous health check is running due to slow certbot give it some time
 if [ -f /healthcheck ]; then
   # If last modified on /healthcheck is > 60 seconds exit 21

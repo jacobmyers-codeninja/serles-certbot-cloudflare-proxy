@@ -94,11 +94,6 @@ cat /opt/serles/gunicorn_config.py
 echo "---------------------------"
 echo
 
-# TODO: For testing, remove for release
-if [ ! -z $TESTING ]; then
-  exit
-fi
-
 echo "Starting gunicorn server..."
 
 runuser -u nobody -- /opt/serles/bin/gunicorn -p /data/serles/gunicorn.pid \
