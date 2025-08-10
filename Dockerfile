@@ -27,7 +27,6 @@ RUN python3 -m venv /opt/serles &&\
     python3 -m pip install --quiet --no-cache-dir serles-acme==1.1.0
 
 COPY entrypoint.sh /entrypoint.sh
-COPY healthcheck.py /healthcheck.py
 COPY healthcheck.sh /healthcheck.sh
 COPY check-cert.sh /check-cert.sh
 COPY gunicorn_config.py.tpl /opt/serles/gunicorn_config.py.tpl
