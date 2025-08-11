@@ -17,8 +17,8 @@ Most of the setup is controlled via environment variables to make it easy to dep
 | KEY_FILE     | <none>                                                     | Path to the private key for CERT_FILE                                                  |
 | CERT_NAME    | serles                                                     | Certificate name to use for certbot when using automatic HTTPS, default should be fine |
 | CERTBOT_CONF | preferred-challenges=dns\n\                                | Contents to append to the certbot config, default uses cloudflare simple config
-| CERTBOT_CONF | dns-cloudflare\n\                                          | |
-| CERTBOT_CONF | dns-cloudflare-credentials=/data/certbot/config/cloudflare-credentials.ini |  |
+|              | dns-cloudflare\n\                                          | |
+|              | dns-cloudflare-credentials=/data/certbot/config/cloudflare-credentials.ini |  |
 
 If no CERT_FILE is provided, the system will use certbot to attempt to obtain a certificate automatically.
 
