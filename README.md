@@ -4,19 +4,19 @@ Aside from some primitive IP checks and PTR verification there is no security, n
 
 Most of the setup is controlled via environment variables to make it easy to deploy and use. It comes pre-configured for cloudflare so you only need to provide the api key in a file in the certbot volume. This could be done via a secret file or other process as well if desired.
 
-| Env Vars     | Default                                                     | Notes                                                                                 |
-| ------------ | ----------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| EMAIL        | <none>                                                      | Email for certbot account registration                                                |
-| ALLOWED_IPS  | ::1/128,127.0.0.0/8,192.168.0.0/16,10.0.0.0/8,172.16.0.0/16 | CSV list of allowed IP CIDRs                                                          |
-| DENIED_IPS   | 127.0.0.2/32                                                | CSV list of denied IP CIDRs                                                           |
-| VERIFY_PTR   | true                                                        | true to require a valid PTR for request                                               |
-| CONFIG       | /data/serles/config.ini                                     | path to fully custom config.ini for serles if not using ENV vars                      |
-| RESOLV_CONF  | <none>                                                      | content to write to /etc/resolv.conf (ie: nameserver 1.1.1.1)                         |
-| FQDN         | <none>                                                      | Fully qualified domain name for the server to enable HTTPS mode                       |
-| CERT_FILE    | <none>                                                      | Path to a custom SSL certificate file (PEM). If not set, ACME will be used            |
-| KEY_FILE     | <none>                                                      | Path to the private key for CERT_FILE                                                 |
-| CERT_NAME    | <none>                                                      | Certificate name to use for certbot when using automatic HTTPS                        |
-| CERTBOT_CONF | <none>                                                      | Contents to append to the certbot config                                              |
+| Env Vars     | Default                                                    | Notes                                                                                  |
+|--------------|------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| EMAIL        | <none>                                                     | Email for certbot account registration                                                 |
+| ALLOWED_IPS  | ::1/128,127.0.0.0/8,192.168.0.0/16,10.0.0.0/8,172.16.0.0/16| CSV list of allowed IP CIDRs                                                           |
+| DENIED_IPS   | 127.0.0.2/32                                               | CSV list of denied IP CIDRs                                                            |
+| VERIFY_PTR   | true                                                       | true to require a valid PTR for request                                                |
+| CONFIG       | /data/serles/config.ini                                    | Path to fully custom config.ini for serles if not using ENV vars                       |
+| RESOLV_CONF  | <none>                                                     | Content to write to /etc/resolv.conf (ie: nameserver 1.1.1.1)                          |
+| FQDN         | <none>                                                     | Fully qualified domain name for the server to enable HTTPS mode                        |
+| CERT_FILE    | <none>                                                     | Path to a custom SSL certificate file (PEM). If not set, ACME will be used             |
+| KEY_FILE     | <none>                                                     | Path to the private key for CERT_FILE                                                  |
+| CERT_NAME    | serles                                                     | Certificate name to use for certbot when using automatic HTTPS, default should be fine  |
+| CERTBOT_CONF | <none>                                                     | Contents to append to the certbot config                                               |
 
 If no CERT_FILE is provided, the system will use certbot to attempt to obtain a certificate automatically.
 
