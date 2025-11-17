@@ -70,11 +70,11 @@ if [ $EXIT_CODE -eq 11 ] || [ $EXIT_CODE -eq 12 ] || [ $EXIT_CODE -eq 13 ]; then
 
   echo "Running certbot..."
   # Try to get a cert through certbot
-  runuser -u nobody -- /usr/bin/certbot certonly \
-                       --non-interactive \
-                       --config /data/certbot/serles.ini \
-                       --cert-name $CERT_NAME \
-                       -d $FQDN
+  runuser -u nobody -g nogroup -- /usr/bin/certbot certonly \
+                               --non-interactive \
+                               --config /data/certbot/serles.ini \
+                               --cert-name $CERT_NAME \
+                               -d $FQDN
   echo "Certbot completed!"
 
   # Let them know we got or refreshed a cert
