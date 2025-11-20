@@ -21,6 +21,9 @@ Default: true
 - CONFIG: Path to fully custom config.ini for serles if not using ENV vars<br>
 Default: /data/serles/config.ini
 
+- GUNICORN_TIMEOUT: Timeout in seconds for the worker (make sure this is long enough to handle any validation)
+Default: 120
+
 - RESOLV_CONF: Content to write to /etc/resolv.conf (ie: nameserver 1.1.1.1)<br>
 Default:
 
